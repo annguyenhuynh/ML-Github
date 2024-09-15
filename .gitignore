@@ -162,4 +162,4 @@ cython_debug/
 #.idea/
 
 .artifacts
-.DS_store
+.DS_Store
