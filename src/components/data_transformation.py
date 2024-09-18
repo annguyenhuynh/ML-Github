@@ -90,6 +90,8 @@ class DataTransformation:
       train_arr = np.c_[input_features_train_arr,np.array(target_feature_train_df)] #np_c: concatenate arrays along the columns (2nd axis)
       test_arr = np.c_[input_features_test_arr,np.array(target_feature_test_df)]
 
+
+
       logging.info(f"Save preprocessing object")
       
       save_object(
