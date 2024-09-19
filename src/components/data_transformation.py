@@ -40,13 +40,15 @@ class DataTransformation:
       categorial_pipeline = Pipeline(
         steps = [
           ("imputer", SimpleImputer(strategy="most_frequent")),
-          ("one_hot_encoder", OneHotEncoder(sparse_output=False)),
-          ("scaler", StandardScaler())
+          ("one_hot_encoder", OneHotEncoder(sparse_output=False,handle_unknown='ignore')),
+          ("scaler", StandardScaler(with_mean=False))
         ]
       )
 
-      logging.info("Categorical columns: {categorical_features}")
-      logging.info("Numerical columns: {numerical_columns}")
+      logging.info(f"Categorical columns: {categorical_features}")
+      logging.info(f"Numerical columns: {numerical_columns}")
+
+      
 
     
 
@@ -65,7 +67,12 @@ class DataTransformation:
   def initiate_data_transformation(self, train_path, test_path):
     try:
       train_df = pd.read_csv(train_path)
-      test_df = pd.read_csv(test_path)
+      test_df = pd.read_csv(test_path) 
+
+      logging.info(f"Missing values in train_df: {train_df.isnull().sum()}")
+      logging.info(f"Missing values in test_df: {test_df.isnull().sum()}")
+
+      logging.info(f"Data types of train_df:\n{train_df.dtypes}")
 
       logging.info("Read train and test data")
 
