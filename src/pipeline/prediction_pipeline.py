@@ -45,12 +45,12 @@ class PredictPipeline:
 class CustomData:
   def __init__(self,
                gender:str,
-               race_ethnicity: int,
+               race_ethnicity:str,
                parental_level_of_education:str,
-               lunch:int,
+               lunch:str,
                test_prep_course: str,
-               reading_score:int,
-               writing_score:int):
+               reading_score,
+               writing_score):
     
     self.gender = gender
     self.race_ethnicity = race_ethnicity 
@@ -72,10 +72,11 @@ class CustomData:
         "writing score":[self.writing_score]
       
       }
-      df=pd.DataFrame(custom_data_input_dict)
-      return df
-      #for column in df.columns:
-        #df[column].fillna(df[column].mode()[0], inplace=True)
+      df = pd.DataFrame(custom_data_input_dict)
+      for column in df.columns:
+        df[column].fillna("Unknown" if df[column].dtype == object else df[column].mean(), inplace=True)
+        
+        return df
     
     except Exception as e:
       raise CustomException(e,sys)
